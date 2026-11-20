@@ -1,0 +1,25 @@
+{
+  "name": "bookstack-library-inventory",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "vite",
+    "server": "nodemon server/app.js",
+    "build": "vite build",
+    "start": "NODE_ENV=production node server/app.js",
+    "start:windows": "set NODE_ENV=production&& node server/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.9",
+    "vite": "^6.0.7"
+  }
+}

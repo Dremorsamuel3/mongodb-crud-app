@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#171927" />
+  <meta name="description" content="A MongoDB-powered library inventory manager" />
+  <title>Bookstack · Library Inventory</title>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span>▣</span> Bookstack</div>
+      <nav><button class="nav">▦ &nbsp; Library</button></nav>
+      <div class="profile">Library Manager</div>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <div><span class="eyebrow">WORKSPACE / LIBRARY</span><h1>Book Inventory</h1></div>
+        <button id="addBook" class="btn primary">＋ Add book</button>
+      </header>
+
+      <section class="stats" aria-label="Library statistics">
+        <article class="stat"><span>Total books</span><strong id="statBooks">—</strong></article>
+        <article class="stat"><span>Total copies</span><strong id="statCopies">—</strong></article>
+        <article class="stat"><span>Low-stock titles</span><strong id="statLow">—</strong></article>
+      </section>
+
+      <section class="card">
+        <div class="toolbar">
+          <label class="search-wrap">⌕ <input id="search" type="search" placeholder="Search title, author, or ISBN" aria-label="Search books"></label>
+          <select id="genreFilter" aria-label="Filter by genre"></select>
+        </div>
+        <div class="table-head" aria-hidden="true"><div>BOOK</div><div>ISBN</div><div>GENRE</div><div>YEAR</div><div>COPIES</div><div>ACTIONS</div></div>
+        <div id="tableBody"></div>
+        <div id="clearFilters" class="footer"></div>
+      </section>
+      <div id="bookCount" class="footer"></div>
+    </main>
+  </div>
+
+  <div id="bookModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <span class="eyebrow">BOOK DETAILS</span>
+      <h2 id="modalTitle">Add a new book</h2>
+      <form id="bookForm"></form>
+    </div>
+  </div>
+
+  <div id="deleteModal" class="overlay" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+    <div class="modal small">
+      <h2 id="deleteTitle">Delete book?</h2>
+      <p><strong id="deleteName"></strong> will be permanently removed from the library.</p>
+      <div class="modal-actions"><button class="btn secondary" data-close>Cancel</button><button id="confirmDelete" class="btn" style="background:#df5a50;color:white">Delete</button></div>
+    </div>
+  </div>
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+  <script type="module" src="/src/app-entry.js"></script>
+</body>
+</html>
