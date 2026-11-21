@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const CATEGORIES = ['Electronics', 'Furniture', 'Office', 'Accessories', 'Clothing', 'Food & Beverage']
