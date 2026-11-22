@@ -22,7 +22,8 @@ function useToasts() {
     dispatch({ type: 'ADD', id, kind, msg })
     setTimeout(() => dispatch({ type: 'REMOVE', id }), 3500)
   }, [])
-  return { toasts, push }
+  const dismiss = id => dispatch({ type: 'REMOVE', id })
+  return { toasts, push, dismiss }
 }
 
 function Toasts({ toasts, dismiss }) {
@@ -179,14 +180,7 @@ export default function App() {
   const [sortOrder, setSortOrder] = useState('desc')
   const [modal,     setModal]     = useState(false)   // false | 'create' | product-object
   const [delTarget, setDelTarget] = useState(null)    // product to confirm-delete
-  const { toasts, push } = useToasts()
-
-  // dismiss a toast manually
-  function dismissToast(id) {
-    // the auto-timeout already handles removal; this just gives the × button something to call
-    // We trigger the same REMOVE action via a synthetic timeout of 0
-    setTimeout(() => {}, 0)
-  }
+  const { toasts, push, dismiss } = useToasts()
 
   // ── Data fetching ──────────────────────────────────────────────────────────
   const loadProducts = useCallback(async () => {
@@ -447,7 +441,7 @@ export default function App() {
       )}
 
       {/* ── Toasts ── */}
-      <Toasts toasts={toasts} dismiss={dismissToast} />
+      <Toasts toasts={toasts} dismiss={dismiss} />
     </>
   )
 }

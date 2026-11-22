@@ -19,10 +19,26 @@ const productSchema = new mongoose.Schema({
   quantity: { type: Number, required: true, min: 0 },
   price: { type: Number, required: true, min: 0 },
   notes: { type: String, trim: true, maxlength: 500, default: '' },
-}, { timestamps: true });
+}, { timestamps: true, bufferCommands: false });
 
 productSchema.index({ sku: 1 }, { unique: true });
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
+
+app.get('/api/health', (req, res) => {
+  res.status(mongoose.connection.readyState === 1 ? 200 : 503).json({
+    status: mongoose.connection.readyState === 1 ? 'ok' : 'database_unavailable',
+  });
+});
+
+app.use('/api', (req, res, next) => {
+  if (req.path === '/health') return next();
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      message: 'Database unavailable. Configure MONGO_URI and ensure MongoDB is reachable.',
+    });
+  }
+  next();
+});
 
 app.get('/api/products', async (req, res, next) => {
   try {

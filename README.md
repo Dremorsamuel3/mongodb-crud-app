@@ -1,13 +1,13 @@
-# Bookstack Library Inventory
+# Stockly Product Inventory
 
-A responsive full-stack library inventory application built with Node.js, Express, MongoDB, Mongoose, and vanilla HTML/CSS/JavaScript.
+A responsive full-stack product inventory application built with React, Vite, Node.js, Express, MongoDB, and Mongoose.
 
 ## Features
 
-- Create, read, update, and delete books
-- Search by title, author, or ISBN
-- Filter by genre and view library totals
-- Mongoose validation and duplicate ISBN protection
+- Create, read, update, and delete products
+- Search by name, SKU, or notes
+- Filter by category and view inventory totals
+- Mongoose validation and duplicate SKU protection
 - Loading, empty, error, confirmation, and success states
 - Responsive desktop and mobile interface
 
@@ -31,7 +31,7 @@ A responsive full-stack library inventory application built with Node.js, Expres
    copy .env.example .env
    ```
 
-4. Update `MONGODB_URI` in `.env` if necessary. The default expects MongoDB at `mongodb://127.0.0.1:27017/library_inventory`.
+4. Update `MONGO_URI` in `.env` if necessary. The default expects MongoDB at `mongodb://127.0.0.1:27017/inventory`.
 5. Start the development servers:
 
    ```sh
@@ -39,6 +39,8 @@ A responsive full-stack library inventory application built with Node.js, Expres
    ```
 
 6. Open `http://localhost:5173`. The API runs at `http://localhost:5000`.
+
+The server starts even without MongoDB configured, but inventory API requests return `503` until `MONGO_URI` is set and the database is reachable.
 
 ## Production build
 
@@ -49,13 +51,22 @@ npm run start:windows
 
 Then open `http://localhost:5000` (or the port from `.env`). On macOS/Linux, use `NODE_ENV=production node server/app.js` instead.
 
+## Render deployment
+
+The included `render.yaml` creates a Node web service and declares `MONGO_URI` as a secret environment variable.
+
+1. In Render, create a Web Service from this GitHub repository.
+2. Set `MONGO_URI` to a MongoDB Atlas connection string with database credentials.
+3. Deploy using build command `npm ci && npm run build` and start command `npm start`.
+4. Confirm `/api/health` reports `{"status":"ok"}` before submitting the Render URL.
+
 ## API
 
-- `GET /api/books`
-- `GET /api/books/:id`
-- `POST /api/books`
-- `PUT /api/books/:id`
-- `DELETE /api/books/:id`
+- `GET /api/health`
+- `GET /api/products`
+- `POST /api/products`
+- `PUT /api/products/:id`
+- `DELETE /api/products/:id`
 - `GET /api/stats`
 
-Optional book-list query parameters include `search`, `genre`, `sort`, and `order`.
+Optional product-list query parameters include `search`, `category`, `sort`, and `order`.
