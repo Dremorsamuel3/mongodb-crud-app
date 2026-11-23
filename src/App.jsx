@@ -297,9 +297,9 @@ export default function App() {
             </button>
           </nav>
           <div className="sidebar-profile">
-            <div className="avatar">AM</div>
+            <div className="avatar">DS</div>
             <div className="profile-info">
-              <strong>Alex Morgan</strong>
+              <strong>Dremor Samuel</strong>
               <small>Inventory Manager</small>
             </div>
           </div>
@@ -452,9 +452,9 @@ export default function App() {
               <div className="toolbar"><strong>Workspace members</strong></div>
               <div className="view-content team-grid">
                 <article className="team-card">
-                  <div className="avatar">AM</div>
+                  <div className="avatar">DS</div>
                   <div>
-                    <strong>Alex Morgan</strong>
+                    <strong>Dremor Samuel</strong>
                     <p>Inventory Manager</p>
                     <span className="badge badge--ok">Active</span>
                   </div>
