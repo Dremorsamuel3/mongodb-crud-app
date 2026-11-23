@@ -416,6 +416,29 @@ tbody tr:hover { background: #fafbfc; }
   background: #fafbfc;
 }
 
+.view-content { margin: 0; padding: 20px; }
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.team-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 18px;
+  background: var(--surface);
+}
+.team-card p { color: var(--text-muted); margin: 2px 0 8px; }
+.settings-list { display: grid; gap: 0; }
+.settings-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.settings-list div:last-child { border-bottom: 0; }
+.settings-list span { color: var(--text-muted); }
+
 /* ── Table empty/loading states ────────────────────────────────────────────── */
 .table-state {
   text-align: center;

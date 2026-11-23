@@ -51,6 +51,10 @@ npm run start:windows
 
 Then open `http://localhost:5000` (or the port from `.env`). On macOS/Linux, use `NODE_ENV=production node server/app.js` instead.
 
+## VS Code
+
+Open the Run and Debug view and choose **Inventory App (Full Stack)** to start both the Vite client and Express API. The configuration is available in `.vscode/launch.json`.
+
 ## Render deployment
 
 The included `render.yaml` creates a Node web service and declares `MONGO_URI` as a secret environment variable.
@@ -70,3 +74,13 @@ The included `render.yaml` creates a Node web service and declares `MONGO_URI` a
 - `GET /api/stats`
 
 Optional product-list query parameters include `search`, `category`, `sort`, and `order`.
+
+## Submission checklist
+
+- [ ] Set `MONGO_URI` to a reachable MongoDB Atlas or local MongoDB connection string.
+- [ ] Run `npm install`.
+- [ ] Run `npm run build`.
+- [ ] Run `npm run dev` and verify the app at `http://localhost:5173`.
+- [ ] Verify CRUD operations and refresh the page to confirm data persists in MongoDB.
+- [ ] Confirm `GET /api/health` returns `{"status":"ok"}`.
+- [ ] Optionally deploy `render.yaml` and submit the public Render URL.

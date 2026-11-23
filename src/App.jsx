@@ -174,6 +174,7 @@ export default function App() {
   const [products,  setProducts]  = useState([])
   const [stats,     setStats]     = useState(null)
   const [loading,   setLoading]   = useState(true)
+  const [activeView, setActiveView] = useState('Inventory')
   const [query,     setQuery]     = useState('')
   const [category,  setCategory]  = useState('All')
   const [sortField, setSortField] = useState('createdAt')
@@ -270,16 +271,28 @@ export default function App() {
             <span className="brand-name">Stockly</span>
           </div>
           <nav className="sidebar-nav">
-            <button className="nav-btn nav-btn--active">
+            <button
+              className={`nav-btn${activeView === 'Inventory' ? ' nav-btn--active' : ''}`}
+              onClick={() => setActiveView('Inventory')}
+            >
               <span className="nav-icon">▦</span><span className="nav-label">Inventory</span>
             </button>
-            <button className="nav-btn">
+            <button
+              className={`nav-btn${activeView === 'Analytics' ? ' nav-btn--active' : ''}`}
+              onClick={() => setActiveView('Analytics')}
+            >
               <span className="nav-icon">◎</span><span className="nav-label">Analytics</span>
             </button>
-            <button className="nav-btn">
+            <button
+              className={`nav-btn${activeView === 'Team' ? ' nav-btn--active' : ''}`}
+              onClick={() => setActiveView('Team')}
+            >
               <span className="nav-icon">♧</span><span className="nav-label">Team</span>
             </button>
-            <button className="nav-btn">
+            <button
+              className={`nav-btn${activeView === 'Settings' ? ' nav-btn--active' : ''}`}
+              onClick={() => setActiveView('Settings')}
+            >
               <span className="nav-icon">⚙</span><span className="nav-label">Settings</span>
             </button>
           </nav>
@@ -297,24 +310,28 @@ export default function App() {
           {/* Page header */}
           <header className="page-header">
             <div>
-              <p className="eyebrow">WORKSPACE / INVENTORY</p>
-              <h1>Product Inventory</h1>
+              <p className="eyebrow">WORKSPACE / {activeView.toUpperCase()}</p>
+              <h1>{activeView === 'Inventory' ? 'Product Inventory' : activeView}</h1>
             </div>
-            <button className="btn btn--primary btn--lg" onClick={() => setModal('create')}>
-              <span>＋</span> Add product
-            </button>
+            {activeView === 'Inventory' && (
+              <button className="btn btn--primary btn--lg" onClick={() => setModal('create')}>
+                <span>＋</span> Add product
+              </button>
+            )}
           </header>
 
-          {/* Stats row */}
-          <div className="stats-row">
-            <StatCard label="Total products" value={s.totalProducts ?? '—'} sub="Unique inventory items" />
-            <StatCard label="Units in stock"  value={s.totalUnits    ?? '—'} sub="Across all categories" />
-            <StatCard label="Inventory value" value={fmtValue(s.totalValue)} sub="Current retail value" />
-            <StatCard label="Low / out stock" value={s.lowStock      ?? '—'} sub="Items needing attention" alert />
-          </div>
+          {activeView === 'Inventory' ? (
+            <>
+              {/* Stats row */}
+              <div className="stats-row">
+                <StatCard label="Total products" value={s.totalProducts ?? '—'} sub="Unique inventory items" />
+                <StatCard label="Units in stock"  value={s.totalUnits    ?? '—'} sub="Across all categories" />
+                <StatCard label="Inventory value" value={fmtValue(s.totalValue)} sub="Current retail value" />
+                <StatCard label="Low / out stock" value={s.lowStock      ?? '—'} sub="Items needing attention" alert />
+              </div>
 
-          {/* Table card */}
-          <section className="table-card">
+              {/* Table card */}
+              <section className="table-card">
             {/* Toolbar */}
             <div className="toolbar">
               <label className="search-box">
@@ -418,7 +435,43 @@ export default function App() {
                 {products.length} product{products.length !== 1 ? 's' : ''} shown
               </div>
             )}
-          </section>
+              </section>
+            </>
+          ) : activeView === 'Analytics' ? (
+            <section className="table-card">
+              <div className="toolbar"><strong>Inventory overview</strong></div>
+              <div className="stats-row view-content">
+                <StatCard label="Total products" value={s.totalProducts ?? '—'} sub="Unique inventory items" />
+                <StatCard label="Units in stock" value={s.totalUnits ?? '—'} sub="Available across inventory" />
+                <StatCard label="Inventory value" value={fmtValue(s.totalValue)} sub="Estimated retail value" />
+                <StatCard label="Stock attention" value={s.lowStock ?? '—'} sub="Low or out of stock" alert />
+              </div>
+            </section>
+          ) : activeView === 'Team' ? (
+            <section className="table-card">
+              <div className="toolbar"><strong>Workspace members</strong></div>
+              <div className="view-content team-grid">
+                <article className="team-card">
+                  <div className="avatar">AM</div>
+                  <div>
+                    <strong>Alex Morgan</strong>
+                    <p>Inventory Manager</p>
+                    <span className="badge badge--ok">Active</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+          ) : (
+            <section className="table-card">
+              <div className="toolbar"><strong>Application settings</strong></div>
+              <div className="view-content settings-list">
+                <div><span>Application</span><strong>Stockly Inventory</strong></div>
+                <div><span>Database</span><strong>MongoDB Atlas</strong></div>
+                <div><span>Data mode</span><strong>Persistent cloud storage</strong></div>
+                <div><span>Deployment</span><strong>Render</strong></div>
+              </div>
+            </section>
+          )}
         </main>
       </div>
 
